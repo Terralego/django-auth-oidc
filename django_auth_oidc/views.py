@@ -91,7 +91,8 @@ def callback(request):
 	if not user or not user.is_authenticated:
 		return login_again(request, return_path)
 
-	del request.session['login_attempt']
+	if 'login_attempt' in request.session :
+		del request.session['login_attempt']
 	auth.login(request, user)
 	request.session['openid_token'] = res.id_token
 	request.session['openid'] = res.id
